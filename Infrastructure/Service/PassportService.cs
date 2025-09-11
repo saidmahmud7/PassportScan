@@ -16,7 +16,7 @@ namespace Infrastructure.Service
 {
     public class PassportService(
         IPassportRepository repository,
-        ILogger<PassportService> logger,     
+        ILogger<PassportService> logger,
         IHostEnvironment environment)
         : IPassportService
     {
@@ -36,11 +36,11 @@ namespace Infrastructure.Service
             return new ApiResponse<List<PassportDto>>(result);
         }
 
-        public async Task<ApiResponse<string>> ProcessPdfAsync(IFormFile file)
+        public async Task<ApiResponse<string>> ProcessPdfAsync(IFormFile file, PassportDto dto)
         {
             var license = Environment.GetEnvironmentVariable("Key_Ocr");
             License.LicenseKey = license;
-            
+
             if (file == null || file.Length == 0)
                 return new ApiResponse<string>(HttpStatusCode.BadRequest, "Файл отсутствует или пуст.");
 
@@ -69,7 +69,7 @@ namespace Infrastructure.Service
                     logger.LogError("Файл не был сохранен по пути: {FilePath}", filePath);
                     return new ApiResponse<string>(HttpStatusCode.InternalServerError, "Не удалось сохранить файл.");
                 }
-                
+
                 Installation.LanguagePackDirectory = "/app/tessdata_best";
 
                 string fullText;
@@ -95,7 +95,6 @@ namespace Infrastructure.Service
                     if (file.FileName.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                     {
                         input.LoadPdf(filePath, 300);
-                        
                     }
                     else
                     {
@@ -105,7 +104,6 @@ namespace Infrastructure.Service
                     input.DeNoise(true);
                     input.Deskew();
                     input.Contrast();
-
 
                     var results = ocr.Read(input);
                     fullText = results.Text;
@@ -119,14 +117,17 @@ namespace Infrastructure.Service
                     Data = cleanedText,
                     FullText = fullText,
                     FilePath = $"/uploads/passports/{uniqueFileName}",
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = dto.CreatedAt,
+                    DepartmentId = dto.DepartmentId
                 };
 
                 var result = await repository.AddAsync(entity);
                 logger.LogInformation("Repository AddAsync returned: {Result}, FilePath: {FilePath}", result,
                     entity.FilePath);
 
-                if (result == 1) return new ApiResponse<string>(HttpStatusCode.OK, "Success");
+                if (result == 1)
+                    return new ApiResponse<string>(HttpStatusCode.OK, "Success");
+
                 logger.LogError("Не удалось сохранить данные паспорта в репозитории. FilePath: {FilePath}",
                     entity.FilePath);
                 if (File.Exists(filePath))
@@ -150,6 +151,7 @@ namespace Infrastructure.Service
             }
         }
 
+
         public async Task<ApiResponse<string>> UpdatePassportAsync(int id, PassportDto dto)
         {
             // var passport = await repository.GetByIdAsync(p => p.Id == id);
@@ -158,7 +160,6 @@ namespace Infrastructure.Service
             //
             // passport.Data = dto.Data;
             throw new Exception("Loading");
-
         }
 
 
@@ -192,7 +193,7 @@ namespace Infrastructure.Service
 
             var result = await repository.DeleteAsync(passport);
             if (result == 1)
-            {   
+            {
                 try
                 {
                     if (File.Exists(filePath))
@@ -215,7 +216,7 @@ namespace Infrastructure.Service
                         logger.LogWarning("Текстовый файл не найден по пути: {TextFilePath}", textFilePath);
                     }
 
-                    return new ApiResponse<string>(HttpStatusCode.OK,"Success");
+                    return new ApiResponse<string>(HttpStatusCode.OK, "Success");
                 }
                 catch (Exception ex)
                 {
@@ -251,7 +252,7 @@ namespace Infrastructure.Service
             text = Regex.Replace(text, @"[^\w\s\r\nа-яА-Яa-zA-Z0-9.,:/()-]", " ");
             text = Regex.Replace(text, @"\s+", " ");
             text = Regex.Replace(text, @"(\r\n){3,}", "\r\n\r\n");
-            text = text.Remove(0,5);
+            text = text.Remove(0, 5);
             text = Regex.Replace(text, @"^\s*[^a-zA-Zа-яА-Я0-9]+$", "", RegexOptions.Multiline);
 
             return text.Trim();

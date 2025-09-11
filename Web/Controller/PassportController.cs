@@ -7,24 +7,28 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controller;
+
 [ApiController]
 [Route("api/[controller]")]
 public class PassportController(IPassportService service) : ControllerBase
 {
     [HttpGet]
-    [Authorize] 
+    [Authorize]
     public async Task<ApiResponse<List<PassportDto>>> GetAll() => await service.GetAllAsync();
-    
-    [HttpPost]
-    [Authorize] 
-    public async Task<ApiResponse<string>> Create([FromForm] PassportUploadDto request) =>
-        await service.ProcessPdfAsync(request.File);
 
+    [Authorize]
+    [HttpPost("upload")]
+    public async Task<ApiResponse<string>> UploadPassport([FromForm] IFormFile file, [FromForm] PassportDto dto)
+    {
+        return await service.ProcessPdfAsync(file, dto);
+    }
+
+
+    [Authorize]
     [HttpGet("{id}")]
-    [Authorize] 
     public async Task<ApiResponse<PassportDto>> GetById(int id) => await service.GetPassportAsync(id);
-    [HttpDelete]
-    [Authorize] 
-    public async Task<ApiResponse<string>> Delete(int id) => await service.DeletePassportAsync(id);
 
+    [HttpDelete]
+    [Authorize]
+    public async Task<ApiResponse<string>> Delete(int id) => await service.DeletePassportAsync(id);
 }
