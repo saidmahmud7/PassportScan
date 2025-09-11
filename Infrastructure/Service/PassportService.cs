@@ -68,6 +68,8 @@ namespace Infrastructure.Service
                     logger.LogError("Файл не был сохранен по пути: {FilePath}", filePath);
                     return new ApiResponse<string>(HttpStatusCode.InternalServerError, "Не удалось сохранить файл.");
                 }
+                
+                Installation.LanguagePackDirectory = "/app/tessdata_best";
 
                 string fullText;
                 var ocr = new IronTesseract
