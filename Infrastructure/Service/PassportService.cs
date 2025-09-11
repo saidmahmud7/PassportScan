@@ -36,11 +36,12 @@ namespace Infrastructure.Service
             return new ApiResponse<List<PassportDto>>(result);
         }
 
-        public async Task<ApiResponse<string>> ProcessPdfAsync(IFormFile file, PassportDto dto)
+        public async Task<ApiResponse<string>> ProcessPdfAsync(PassportUploadDto dto)
         {
             var license = Environment.GetEnvironmentVariable("Key_Ocr");
             License.LicenseKey = license;
 
+            var file = dto.File;
             if (file == null || file.Length == 0)
                 return new ApiResponse<string>(HttpStatusCode.BadRequest, "Файл отсутствует или пуст.");
 
@@ -117,7 +118,7 @@ namespace Infrastructure.Service
                     Data = cleanedText,
                     FullText = fullText,
                     FilePath = $"/uploads/passports/{uniqueFileName}",
-                    CreatedAt = dto.CreatedAt,
+                    CreatedAt = dto.CreatedAt == default ? DateTime.UtcNow : dto.CreatedAt,
                     DepartmentId = dto.DepartmentId
                 };
 

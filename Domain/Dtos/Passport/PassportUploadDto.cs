@@ -4,5 +4,8 @@ namespace Domain.Dtos.Passport;
 
 public class PassportUploadDto
 {
-    public IFormFile File { get; set; }
+    public int DepartmentId { get; set; }
+    public DateTime CreatedAt { get; set; } 
+    public IFormFile File { get; set; } = null!;
+    
 }

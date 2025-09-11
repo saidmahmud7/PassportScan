@@ -17,10 +17,10 @@ public class PassportController(IPassportService service) : ControllerBase
     public async Task<ApiResponse<List<PassportDto>>> GetAll() => await service.GetAllAsync();
 
     [Authorize]
-    [HttpPost("upload")]
-    public async Task<ApiResponse<string>> UploadPassport([FromForm] IFormFile file, [FromForm] PassportDto dto)
+    [HttpPost]
+    public async Task<ApiResponse<string>> UploadPassport([FromForm] PassportUploadDto dto)
     {
-        return await service.ProcessPdfAsync(file, dto);
+        return await service.ProcessPdfAsync(dto);
     }
 
 
