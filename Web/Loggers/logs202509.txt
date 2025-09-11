@@ -8175,3 +8175,5 @@ System.InvalidOperationException: Unable to resolve service for type 'Infrastruc
 2025-09-11 13:41:31.271 +03:00 [INF] No migrations were applied. The database is already up to date.
 2025-09-11 13:42:52.719 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
 2025-09-11 13:42:53.332 +03:00 [INF] Applying migration '20250911104233_InitialCreate'.
+2025-09-11 17:21:22.131 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-09-11 17:21:22.967 +03:00 [INF] Applying migration '20250911142050_InitialCreate2'.

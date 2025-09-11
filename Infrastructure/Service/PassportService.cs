@@ -29,7 +29,8 @@ namespace Infrastructure.Service
             {
                 Id = p.Id,
                 Data = CleanPassportText(p.Data),
-                FilePath = p.FilePath
+                FilePath = p.FilePath,
+                CreatedAt = p.CreatedAt,
             }).ToList();
 
             return new ApiResponse<List<PassportDto>>(result);
@@ -117,7 +118,8 @@ namespace Infrastructure.Service
                 {
                     Data = cleanedText,
                     FullText = fullText,
-                    FilePath = $"/uploads/passports/{uniqueFileName}"
+                    FilePath = $"/uploads/passports/{uniqueFileName}",
+                    CreatedAt = DateTime.UtcNow
                 };
 
                 var result = await repository.AddAsync(entity);
