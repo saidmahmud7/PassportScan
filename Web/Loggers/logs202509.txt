@@ -8169,3 +8169,9 @@ System.InvalidOperationException: Unable to resolve service for type 'Infrastruc
 2025-09-11 12:08:16.324 +03:00 [INF] Executed endpoint 'Web.Controller.PassportController.GetAll (Web)'
 2025-09-11 12:08:16.326 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5023/api/Passport - 200 null application/json; charset=utf-8 88.8082ms
 2025-09-11 12:08:26.502 +03:00 [INF] Application is shutting down...
+2025-09-11 13:34:51.760 +03:00 [ERR] An error occurred using the connection to database 'passportscan' on server 'tcp://dpg-d3189ep5pdvs738uj070-a:5432'.
+2025-09-11 13:41:27.758 +03:00 [INF] No migrations were found in assembly 'Infrastructure'. A migration needs to be added before the database can be updated.
+2025-09-11 13:41:30.656 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-09-11 13:41:31.271 +03:00 [INF] No migrations were applied. The database is already up to date.
+2025-09-11 13:42:52.719 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-09-11 13:42:53.332 +03:00 [INF] Applying migration '20250911104233_InitialCreate'.
