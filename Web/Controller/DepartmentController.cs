@@ -13,6 +13,7 @@ namespace Web.Controller;
 public class DepartmentController(IDepartmentService service) : ControllerBase
 {
     [HttpGet]
+    [Authorize] 
     public async Task<PaginationResponse<List<GetDepartmentsDto>>> GetAll([FromQuery] DepartmentFilter filter)
     {
         return await service.GetAllDepartmentsAsync(filter);
