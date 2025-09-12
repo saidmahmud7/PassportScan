@@ -30,6 +30,7 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
                 Data = p.Data,
                 FilePath = p.FilePath,
                 CreatedAt = p.CreatedAt,
+                DepartmentId = p.DepartmentId,
             }).ToList()
         }).ToList();
         return new PaginationResponse<List<GetDepartmentsDto>>(result, totalRecords, filter.PageNumber,
@@ -54,6 +55,7 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
                 Data = p.Data,
                 FilePath = p.FilePath,
                 CreatedAt = p.CreatedAt,
+                DepartmentId = p.DepartmentId
             }).ToList()
         };
         return new ApiResponse<GetDepartmentsDto>(result);

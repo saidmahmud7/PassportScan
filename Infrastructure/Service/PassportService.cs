@@ -31,6 +31,7 @@ namespace Infrastructure.Service
                 Data = CleanPassportText(p.Data),
                 FilePath = p.FilePath,
                 CreatedAt = p.CreatedAt,
+                DepartmentId = p.DepartmentId
             }).ToList();
 
             return new ApiResponse<List<PassportDto>>(result);
@@ -174,7 +175,9 @@ namespace Infrastructure.Service
             {
                 Id = passport.Id,
                 Data = CleanPassportText(passport.Data),
-                FilePath = passport.FilePath
+                FilePath = passport.FilePath,
+                DepartmentId = passport.DepartmentId,
+                CreatedAt = passport.CreatedAt,
             };
 
             return new ApiResponse<PassportDto>(dto);
