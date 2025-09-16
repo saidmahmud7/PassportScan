@@ -11,8 +11,7 @@ public class EmployeeRepository(DataContext context, ILogger<EmployeeRepository>
 {
     public async Task<List<Employee>> GetAll(EmployeeFilter filter)
     {
-        var query = context.Employees.Include(e => e.User)     
-            .ThenInclude(u => u.Role).AsQueryable();
+        var query = context.Employees.AsQueryable();
 
         if (!string.IsNullOrEmpty(filter.FullName))
             query = query.Where(e => e.FullName.ToLower().Trim().Contains(filter.FullName.ToLower().Trim()));
