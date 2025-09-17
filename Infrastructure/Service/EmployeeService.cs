@@ -25,7 +25,7 @@ public class EmployeeService(IEmployeeRepository repository) : IEmployeeService
             CreatedAt = d.CreatedAt,
             DepartmentId = d.DepartmentId,
             UserId = d.UserId,
-            RoleId = d.User.RoleId
+            RoleId = d.User.Role.Name
         }).ToList();
         return new PaginationResponse<List<GetEmployeeDto>>(result, totalRecords, filter.PageNumber, filter.PageSize);
     }
