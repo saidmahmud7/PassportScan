@@ -17,4 +17,5 @@ public class RoleService(RoleManager<IdentityRole> roleManager) : IRoleService
         }).ToListAsync();
         return new ApiResponse<List<Role>>(roles);
     }
+
 }

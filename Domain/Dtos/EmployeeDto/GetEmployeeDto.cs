@@ -7,5 +7,4 @@ public class GetEmployeeDto
     public DateTime CreatedAt { get; set; } 
     public string UserId { get; set; }
     public int DepartmentId { get; set; }
-    public string? RoleId { get; set; }
 }
