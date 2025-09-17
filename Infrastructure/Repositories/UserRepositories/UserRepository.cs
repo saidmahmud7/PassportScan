@@ -11,7 +11,7 @@ public class UserRepository(DataContext context, ILogger<UserRepository> logger)
 {
     public async Task<List<User>> GetAll(UserFilter filter)
     {
-        var query = context.Users.OrderByDescending(c=> c.CreatedAt).AsQueryable();
+        var query = context.Users.OrderByDescending(c=> c.CreatedAt).Include(r=>r.Role).AsQueryable();
 
         var users = await query.ToListAsync();
         return users;

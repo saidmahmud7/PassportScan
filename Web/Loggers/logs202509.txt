@@ -8181,3 +8181,5 @@ System.InvalidOperationException: Unable to resolve service for type 'Infrastruc
 2025-09-16 14:43:33.187 +03:00 [ERR] An error occurred using the connection to database 'passportscan' on server 'tcp://dpg-d3189ep5pdvs738uj070-a.singapore-postgres.render.com:5432'.
 2025-09-16 15:11:35.943 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
 2025-09-16 15:11:36.471 +03:00 [INF] Applying migration '20250916114033_AddField'.
+2025-09-17 12:25:27.219 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-09-17 12:25:28.321 +03:00 [INF] Applying migration '20250917092438_AddField2'.

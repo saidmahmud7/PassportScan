@@ -8,5 +8,4 @@ public class User : IdentityUser
     public Employee? Employee { get; set; }
     public string RoleId { get; set; }
     public IdentityRole Role { get; set; }
-
 }
