@@ -3,6 +3,7 @@ using Infrastructure.Data;
 using Infrastructure.Extensions;
 using Infrastructure.Seed;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Extensions;
 using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
@@ -54,6 +55,12 @@ catch (Exception e)
 
 
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "wwwroot")),
+    RequestPath = ""
+});
 app.UseSwagger();
 app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
