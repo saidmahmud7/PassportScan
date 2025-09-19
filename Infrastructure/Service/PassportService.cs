@@ -52,7 +52,7 @@ namespace Infrastructure.Service
                 return new ApiResponse<string>(HttpStatusCode.BadRequest, "Ожидается файл формата PDF, PNG или JPG.");
 
             var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
-            var uploadsFolder = Path.Combine(environment.ContentRootPath, "uploads", "passports");
+            var uploadsFolder = Path.Combine(environment.ContentRootPath, "wwwroot", "uploads", "passports");
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
             try
