@@ -15,7 +15,10 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /app/tessdata_best
 RUN curl -L -o /app/tessdata_best/tgk.traineddata https://ironsoftware.com/csharp/ocr/languages/Tajik.ocrdata
     
-RUN mkdir -p /app/wwwroot/uploads/passports && chmod -R 777 /app/wwwroot 
+RUN mkdir -p /app/wwwroot/uploads/passports && \
+    chown -R www-data:www-data /app/wwwroot && \
+    chmod -R 755 /app/wwwroot && \
+    chmod -R 755 /app/wwwroot/uploads
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -35,5 +38,4 @@ RUN dotnet publish "Web.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAp
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build /src/Web/wwwroot ./wwwroot
 ENTRYPOINT ["dotnet", "Web.dll"]

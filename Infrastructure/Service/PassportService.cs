@@ -59,11 +59,21 @@ namespace Infrastructure.Service
             {
                 logger.LogInformation("Создание директории: {UploadsFolder}", uploadsFolder);
                 Directory.CreateDirectory(uploadsFolder);
+                if (Directory.Exists(uploadsFolder))
+                {
+                    var directoryInfo = new DirectoryInfo(uploadsFolder);
+                    directoryInfo.Attributes &= ~FileAttributes.ReadOnly;
+                }
 
                 logger.LogInformation("Сохранение файла в: {FilePath}", filePath);
                 await using (var stream = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                 {
                     await file.CopyToAsync(stream);
+                }
+
+                if (File.Exists(filePath))
+                {
+                    File.SetAttributes(filePath,FileAttributes.Normal);
                 }
 
                 if (!File.Exists(filePath))
