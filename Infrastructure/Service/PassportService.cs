@@ -73,7 +73,7 @@ namespace Infrastructure.Service
 
                 if (File.Exists(filePath))
                 {
-                    File.SetAttributes(filePath,FileAttributes.Normal);
+                    File.SetAttributes(filePath,FileAttributes.Normal); 
                 }
 
                 if (!File.Exists(filePath))

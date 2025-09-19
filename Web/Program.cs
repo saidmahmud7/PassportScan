@@ -53,6 +53,8 @@ catch (Exception e)
     throw;
 }
 
+app.UseStaticFiles();
+
 
 app.UseStaticFiles(new StaticFileOptions
 {
